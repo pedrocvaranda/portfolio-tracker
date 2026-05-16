@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portfolio Tracker</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Portfolio tracker">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">PT</div>
+        <div>
+          <h1>Portfolio Tracker</h1>
+          <p>{{.GeneratedAt}}</p>
+        </div>
+      </div>
+
+      <form id="simulation-form" class="control-panel">
+        <label>
+          <span>Ticker</span>
+          <input id="ticker" name="ticker" value="AAPL" autocomplete="off">
+        </label>
+
+        <div class="field-row">
+          <label>
+            <span>Preço inicial</span>
+            <input id="startPrice" name="startPrice" type="number" min="0.01" step="0.01" value="100">
+          </label>
+          <label>
+            <span>Dias</span>
+            <input id="days" name="days" type="number" min="1" max="756" step="1" value="90">
+          </label>
+        </div>
+
+        <div class="field-row">
+          <label>
+            <span>Drift anual</span>
+            <input id="drift" name="drift" type="number" step="0.01" value="0.08">
+          </label>
+          <label>
+            <span>Volatilidade</span>
+            <input id="volatility" name="volatility" type="number" min="0" step="0.01" value="0.22">
+          </label>
+        </div>
+
+        <label>
+          <span>Caminhos simulados</span>
+          <input id="paths" name="paths" type="range" min="100" max="5000" step="100" value="1000">
+          <output id="paths-output" for="paths">1000</output>
+        </label>
+
+        <label>
+          <span>Seed</span>
+          <input id="seed" name="seed" type="number" step="1" value="42">
+        </label>
+
+        <button type="submit" id="run-button">
+          <span class="button-icon" aria-hidden="true">▶</span>
+          Simular
+        </button>
+      </form>
+    </aside>
+
+    <main class="workspace">
+      <section class="toolbar" aria-live="polite">
+        <div>
+          <p class="eyebrow">Monte Carlo</p>
+          <h2 id="result-title">AAPL · 90 dias</h2>
+        </div>
+        <div class="status-pill" id="status">Pronto</div>
+      </section>
+
+      <section class="metrics-grid" aria-label="Resumo da simulação">
+        <article class="metric">
+          <span>Preço esperado</span>
+          <strong id="expectedEnd">--</strong>
+        </article>
+        <article class="metric">
+          <span>P05</span>
+          <strong id="p05">--</strong>
+        </article>
+        <article class="metric">
+          <span>P50</span>
+          <strong id="p50">--</strong>
+        </article>
+        <article class="metric">
+          <span>P95</span>
+          <strong id="p95">--</strong>
+        </article>
+      </section>
+
+      <section class="chart-panel">
+        <div class="chart-header">
+          <div>
+            <p class="eyebrow">Distribuição de caminhos</p>
+            <h3 id="chart-heading">Trajetórias simuladas</h3>
+          </div>
+          <div class="legend">
+            <span><i class="legend-line expected"></i> Mediana</span>
+            <span><i class="legend-line path"></i> Amostras</span>
+          </div>
+        </div>
+        <canvas id="paths-chart" width="1200" height="560" aria-label="Gráfico de caminhos simulados"></canvas>
+      </section>
+
+      <section class="details-grid">
+        <article class="detail">
+          <span>Simulações</span>
+          <strong id="count">--</strong>
+        </article>
+        <article class="detail">
+          <span>Preço inicial</span>
+          <strong id="start">--</strong>
+        </article>
+        <article class="detail">
+          <span>Gerado em</span>
+          <strong id="generated">--</strong>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
