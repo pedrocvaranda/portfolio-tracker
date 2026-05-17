@@ -1,31 +1,47 @@
 # Architecture
 
-The project is organized as small packages under `portfolio/`, each owning one part of the portfolio tracking workflow.
+**The project is organized as small, focused packages under `portfolio/`, each owning one stage of the portfolio tracking workflow.**
+
+---
+
+## Data Flow
 
 ```mermaid
 flowchart LR
-    Web[Web UI] --> MonteCarlo[Monte Carlo]
-    Scraper[Scraper] --> Validation[Validation]
-    Validation --> Calibration[Calibration]
-    Calibration --> MonteCarlo[Monte Carlo]
-    MonteCarlo --> Backtesting[Backtesting]
-    Scraper --> Storage[Storage]
-    MonteCarlo --> Storage
-    Models[Models] --> Scraper
-    Models --> Storage
-    Models --> Backtesting
+ Web[Web UI] --> MonteCarlo[Monte Carlo]
+ Scraper[Scraper] --> Validation[Validation]
+ Validation --> Calibration[Calibration]
+ Calibration --> MonteCarlo[Monte Carlo]
+ MonteCarlo --> Backtesting[Backtesting]
+ Scraper --> Storage[Storage]
+ MonteCarlo --> Storage
+ Models[Models] --> Scraper
+ Models --> Storage
+ Models --> Backtesting
 ```
+
+---
 
 ## Packages
 
-- `models`: shared domain types such as assets, candles, portfolios, and simulation results.
-- `scraper`: market data interfaces and Yahoo Finance implementation.
-- `validation`: quality checks before calibration.
-- `calibration`: historical parameter estimation and feedback adjustment.
-- `montecarlo`: GBM simulation engine.
-- `rolling`: walk-forward window splitting and optimization.
-- `backtesting`: metrics and forecast comparison.
-- `storage`: persistence interface and in-memory implementation.
-- `web`: embedded web interface and JSON API.
+| Package | Responsibility |
+| --- | --- |
+| `models` | Shared domain types: assets, candles, portfolios, simulation results |
+| `scraper` | Market data interfaces and Yahoo Finance implementation |
+| `validation` | Quality checks before calibration |
+| `calibration` | Historical parameter estimation and feedback adjustment |
+| `montecarlo` | GBM simulation engine |
+| `rolling` | Walk-forward window splitting and optimization |
+| `backtesting` | Metrics and forecast comparison |
+| `storage` | Persistence interface and in-memory implementation |
+| `web` | Embedded web interface and JSON API |
 
-The CLI in `cmd/` wires these pieces into demo, fetch, and web server flows.
+---
+
+## Entry Point
+
+The CLI in `cmd/` wires these packages into three flows:
+
+- **`demo`** runs a Monte Carlo simulation directly in the terminal
+- **`fetch`** pulls Yahoo Finance data, validates, and calibrates parameters
+- **`web`** starts the embedded HTTP server with the simulation UI
