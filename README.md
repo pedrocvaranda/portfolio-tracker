@@ -192,4 +192,5 @@ MIT. See [LICENSE](LICENSE).
 
 ---
 
+[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.20855801-blue?style=flat&logo=doi)]
 [![Go](https://img.shields.io/badge/Go-1.22+-blue.svg)](https://golang.org) [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE) [![Status](https://img.shields.io/badge/status-active-success.svg)]()
